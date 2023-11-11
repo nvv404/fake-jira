@@ -1,14 +1,24 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
 import { Provider } from "react-redux"
-import { store } from "./app/store"
-import App from "./App"
-import "./index.css"
+import { Global } from "@emotion/react"
+import { store } from "data/store"
+import ThemeProvider from "presentation/context/ThemeProvider"
+import ErrorBoundary from "presentation/context/ErrorBoundary"
+import App from "presentation/App"
+import globalStyles from "./globalStyles"
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+const root = ReactDOM.createRoot(document.getElementById("root")!)
+
+root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <ThemeProvider>
+          <Global styles={globalStyles} />
+          <App />
+        </ThemeProvider>
+      </Provider>
+    </ErrorBoundary>
   </React.StrictMode>,
 )
