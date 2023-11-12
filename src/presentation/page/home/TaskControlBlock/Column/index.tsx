@@ -16,8 +16,8 @@ const Column: FC<PropsT> = (props) => {
     <Wrapper>
       <Text>{title}</Text>
       <List>
-        {items.map((item) => (
-          <Item key={v4()} currentBoard={currentBoard} currentTask={item} />
+        {items.map((item, index) => (
+          <Item key={index} currentBoard={currentBoard} currentTask={item} />
         ))}
       </List>
     </Wrapper>

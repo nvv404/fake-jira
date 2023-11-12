@@ -45,8 +45,8 @@ const TaskControlBlock: FC = () => {
     <BoardContext.Provider
       value={{
         boards,
-        activeBoard: activeBoard,
-        activeTask: activeTask,
+        activeBoard,
+        activeTask,
         handleActiveBoardChange,
         handleActiveTaskChange,
         handleBoardsChange,

@@ -23,6 +23,7 @@ const Item: FC<PropsT> = (props) => {
 
   const handleDragOver: DragEventHandler<HTMLLIElement> = (e) => {
     e.preventDefault()
+
     const { target } = e
 
     if (target instanceof HTMLElement && target.tagName === "LI") {
@@ -55,28 +56,34 @@ const Item: FC<PropsT> = (props) => {
     e.preventDefault()
 
     if (activeBoard && activeTask) {
-      const currentIndex = activeBoard.items.indexOf(activeTask)
+      /*
+        remove task from start board
+      */
+      const activeTaskIndex = activeBoard.items.indexOf(activeTask)
       const activeBoardCopy = { ...activeBoard, items: [...activeBoard.items] }
-      activeBoardCopy.items.splice(currentIndex, 1)
+      activeBoardCopy.items.splice(activeTaskIndex, 1)
 
-      const currentBoardCopy = {
+      /*
+        add task to drop board
+      */
+      const dropBoardCopy = {
         ...currentBoard,
         items: [...currentBoard.items],
       }
-      const dropIndex = currentBoardCopy.items.indexOf(currentTask)
-      currentBoardCopy.items.splice(dropIndex + 1, 0, activeTask)
+      const dropIndex = dropBoardCopy.items.indexOf(currentTask)
+      dropBoardCopy.items.splice(dropIndex + 1, 0, activeTask)
 
       handleBoardsUpdate(
-        boards.map((data) => {
-          if (data.id === currentBoardCopy.id) {
-            return currentBoardCopy
+        boards.map((item) => {
+          if (item.id === dropBoardCopy.id) {
+            return dropBoardCopy
           }
 
-          if (data.id === activeBoardCopy.id) {
+          if (item.id === activeBoardCopy.id) {
             return activeBoardCopy
           }
 
-          return data
+          return item
         }),
       )
     }
