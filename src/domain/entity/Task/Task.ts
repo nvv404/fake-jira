@@ -1,7 +1,5 @@
-export default class Task {
-  constructor(
-    public readonly id: number,
-    public readonly name: string,
-    public readonly creationDate: string,
-  ) {}
+export default interface Task {
+  id: number
+  name: string
+  creationDate: string
 }

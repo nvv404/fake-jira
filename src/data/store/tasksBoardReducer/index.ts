@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
-import TaskGroup from "domain/entity/TaskGroup/TaskGroup"
+import TasksBoard from "domain/entity/TasksBoard/TasksBoard"
 
-const API_MOCK_DATA: TaskGroup[] = [
+const API_MOCK_DATA: TasksBoard[] = [
   {
     id: 0,
     items: [
@@ -27,7 +27,7 @@ const API_MOCK_DATA: TaskGroup[] = [
 ]
 
 type StateT = {
-  data: TaskGroup[]
+  data: TasksBoard[]
 }
 
 const initialState: StateT = {

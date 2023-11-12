@@ -1,22 +1,23 @@
 import { FC } from "react"
-import TaskGroup from "domain/entity/TaskGroup/TaskGroup"
+import { v4 } from "uuid"
+import TasksBoard from "domain/entity/TasksBoard/TasksBoard"
 import Item from "./Item"
-import { Wrapper, List, Text } from "./styles"
+import { List, Text, Wrapper } from "./styles"
 
 type PropsT = {
-  data: TaskGroup
+  currentBoard: TasksBoard
 }
 
 const Column: FC<PropsT> = (props) => {
-  const { data } = props
-  const { items, title } = data
+  const { currentBoard } = props
+  const { items, title } = currentBoard
 
   return (
     <Wrapper>
       <Text>{title}</Text>
       <List>
         {items.map((item) => (
-          <Item key={item.id} data={item} />
+          <Item key={v4()} currentBoard={currentBoard} currentTask={item} />
         ))}
       </List>
     </Wrapper>

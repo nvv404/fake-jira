@@ -11,6 +11,6 @@ export const Text = styled(BaseText)().withComponent("p")
 
 export const List = styled.ul`
   display: grid;
-  row-gap: 8px;
+  gap: 8px;
   margin-top: 10px;
 `
