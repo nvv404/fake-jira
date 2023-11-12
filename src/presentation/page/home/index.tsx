@@ -1,6 +1,6 @@
 import { FC } from "react"
 import Filters from "./Filters"
-import ProgressControlBlock from "./ProgressControlBlock"
+import TaskControlBlock from "./TaskControlBlock"
 import { Wrapper, Title } from "./styles"
 
 const HomePage: FC = () => {
@@ -8,7 +8,7 @@ const HomePage: FC = () => {
     <Wrapper>
       <Title>Board</Title>
       <Filters />
-      <ProgressControlBlock />
+      <TaskControlBlock />
     </Wrapper>
   )
 }
