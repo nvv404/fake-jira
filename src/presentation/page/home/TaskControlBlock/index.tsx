@@ -1,17 +1,15 @@
 import { FC } from "react"
-import { useState } from "react"
+import useAppSelector from "presentation/hook/useAppSelector"
 import Column from "./Column"
 import { Wrapper } from "./styles"
 
-
-
 const TaskControlBlock: FC = () => {
-  
+  const { data } = useAppSelector(({ tasksBoard }) => tasksBoard)
 
   return (
     <Wrapper>
-      {items.map((item) => (
-        <Column key = {} title = {} id = {} cards = []> ({item})</Column>
+      {data.map((item) => (
+        <Column key={item.id} data={item} />
       ))}
     </Wrapper>
   )

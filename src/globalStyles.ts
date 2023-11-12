@@ -24,8 +24,8 @@ const globalCss = (theme: ThemeT): SerializedStyles => css`
   body {
     margin: 0;
     padding: 0;
-    background-color: ${theme.colors.white};
-    color: ${theme.colors.black};
+    background-color: ${theme.colors.background};
+    color: ${theme.colors.text};
     font-size: 16px;
     line-height: 1.2;
   }

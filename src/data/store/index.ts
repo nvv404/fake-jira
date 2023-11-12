@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit"
-import 
+import tasksBoardReducer from "data/store/tasksBoardReducer"
 
 const setupStore = () =>
   configureStore({
     reducer: {
-
+      tasksBoard: tasksBoardReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

@@ -1,4 +1,4 @@
-type ColorsT = "black" | "white"
+type ColorsT = "background" | "mainDark" | "mainMedium" | "mainLight" | "text"
 
 export type ColorT = Record<ColorsT, string>
 

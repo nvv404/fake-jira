@@ -17,8 +17,11 @@ const theme: ThemeT = {
     slow: "700ms",
   },
   colors: {
-    black: "#14171a",
-    white: "#ffff",
+    background: "#22092C",
+    mainDark: "#872341",
+    mainMedium: "#BE3144",
+    mainLight: "#F05941",
+    text: "#FCFBF4",
   },
 }
 

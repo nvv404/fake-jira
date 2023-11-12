@@ -1,13 +1,14 @@
 import { FC, PropsWithChildren } from "react"
-import { Wrapper, Header, Content } from "./styles"
+import { Wrapper, Header, Footer, Content } from "./styles"
 
 const Layout: FC<PropsWithChildren> = (props) => {
   const { children } = props
 
   return (
     <Wrapper>
-      <Header>header</Header>
+      <Header>pumpkin header</Header>
       <Content>{children}</Content>
+      <Footer>bats footer</Footer>
     </Wrapper>
   )
 }
