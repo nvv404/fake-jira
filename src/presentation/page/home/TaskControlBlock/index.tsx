@@ -1,63 +1,148 @@
-import { FC, createContext, useState } from "react"
-import TasksBoard from "domain/entity/TasksBoard/TasksBoard"
-import Task from "domain/entity/Task/Task"
-import useAppSelector from "presentation/hook/useAppSelector"
-import Column from "./Column"
-import { Wrapper } from "./styles"
+import { useState, FC } from "react"
+import {
+  DndContext,
+  DragEndEvent,
+  DragOverEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core"
+import { sortableKeyboardCoordinates } from "@dnd-kit/sortable"
+import Droppable from "./Droppable"
+import { arrayMove, insertAtIndex, removeAtIndex } from "./arrayHelpers"
 
-type BoardContextT = {
-  boards: TasksBoard[] | undefined
-  activeBoard: TasksBoard | undefined
-  activeTask: Task | undefined
-  handleBoardsChange: (board: TasksBoard[]) => void
-  handleActiveBoardChange: (board: TasksBoard) => void
-  handleActiveTaskChange: (task: Task) => void
+type ItemsT = {
+  [key: string]: Array<string | number>
 }
-
-export const BoardContext = createContext<BoardContextT>({
-  boards: undefined,
-  activeBoard: undefined,
-  activeTask: undefined,
-  handleBoardsChange: () => {},
-  handleActiveBoardChange: () => {},
-  handleActiveTaskChange: () => {},
-})
 
 const TaskControlBlock: FC = () => {
-  const { data } = useAppSelector(({ tasksBoard }) => tasksBoard)
-  const [boards, setBoards] = useState(data)
-  const [activeBoard, setActiveBoard] = useState<TasksBoard>()
-  const [activeTask, setActiveTask] = useState<Task>()
+  const [items, setItems] = useState<ItemsT>({
+    group1: ["1", "2", "3"],
+    group2: ["4", "5", "6"],
+    group3: ["7", "8", "9"],
+  })
 
-  const handleActiveTaskChange = (item: Task): void => {
-    setActiveTask(item)
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  )
+
+  const moveBetweenContainers = (
+    items: ItemsT,
+    activeContainerKey: string ,
+    activeIndex: number,
+    overContainerKey: string,
+    overIndex: number,
+    item: string | number,
+  ): ItemsT => {
+    return {
+      ...items,
+      [activeContainerKey]: removeAtIndex(
+        items[activeContainerKey],
+        activeIndex,
+      ),
+      [overContainerKey]: insertAtIndex(
+        items[overContainerKey],
+        overIndex,
+        item,
+      ),
+    }
   }
 
-  const handleActiveBoardChange = (item: TasksBoard) => {
-    setActiveBoard(item)
+  const handleDragOver = (event: DragOverEvent) => {
+    const { over, active } = event
+    const overId = over?.id
+    const activeDataCurrent = active.data.current
+
+    if (!overId || !activeDataCurrent) {
+      return
+    }
+
+    const activeContainerKey = activeDataCurrent.sortable.containerId
+    const overContainer = over.data.current?.sortable.containerId
+
+    if (!overContainer) {
+      return
+    }
+
+    if (activeContainerKey !== overContainer) {
+      setItems((items) => {
+        const activeIndex = activeDataCurrent.sortable.index
+        const overIndex = over.data.current?.sortable.index || 0
+
+        return moveBetweenContainers(
+          items,
+          activeContainerKey,
+          activeIndex,
+          overContainer,
+          overIndex,
+          active.id,
+        )
+      })
+    }
   }
 
-  const handleBoardsChange = (items: TasksBoard[]): void => {
-    setBoards(items)
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event
+    const activeDataCurrent = active.data.current
+
+    if (!over || !activeDataCurrent) {
+      return
+    }
+
+    if (active.id !== over.id) {
+      const activeContainer = activeDataCurrent.sortable.containerId
+      const overContainerKey =
+        over.data.current?.sortable.containerId || over.id
+      const activeIndex = activeDataCurrent.sortable.index
+      const overIndex = over.data.current?.sortable.index || 0
+
+      setItems((items) => {
+        let newItems
+
+        if (activeContainer === overContainerKey) {
+          newItems = {
+            ...items,
+            [overContainerKey]: arrayMove(
+              items[overContainerKey],
+              activeIndex,
+              overIndex,
+            ),
+          }
+        } else {
+          newItems = moveBetweenContainers(
+            items,
+            activeContainer,
+            activeIndex,
+            overContainerKey,
+            overIndex,
+            active.id,
+          )
+        }
+
+        return newItems
+      })
+    }
   }
+
+  const containerStyle = { display: "flex" }
 
   return (
-    <BoardContext.Provider
-      value={{
-        boards,
-        activeBoard,
-        activeTask,
-        handleActiveBoardChange,
-        handleActiveTaskChange,
-        handleBoardsChange,
-      }}
+    <DndContext
+      sensors={sensors}
+      onDragEnd={handleDragEnd}
+      onDragOver={handleDragOver}
     >
-      <Wrapper>
-        {boards.map((item) => (
-          <Column key={item.id} currentBoard={item} />
+      <div style={containerStyle}>
+        {Object.keys(items).map((group) => (
+          <Droppable id={group} items={items[group]} key={group} />
         ))}
-      </Wrapper>
-    </BoardContext.Provider>
+      </div>
+    </DndContext>
   )
 }
+
 export default TaskControlBlock
