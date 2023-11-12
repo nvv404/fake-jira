@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit"
+import 
 
 const setupStore = () =>
   configureStore({
-    reducer: {},
+    reducer: {
+
+    },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
-        /*
-                    serializableCheck: false is used to force redux work with js classes
-                */
         serializableCheck: false,
       }),
   })
