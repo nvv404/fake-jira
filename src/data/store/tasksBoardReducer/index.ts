@@ -5,7 +5,6 @@ import BoardType from "domain/entity/TaskBoard/BoardType"
 
 const API_MOCK_DATA: TaskBoard[] = [
   {
-    id: "todo",
     type: BoardType.Todo,
     data: [
       { creationDate: "", id: v4(), name: "Make homework" },
@@ -15,7 +14,6 @@ const API_MOCK_DATA: TaskBoard[] = [
     availableToTransitionBoardTypes: [BoardType.InProgress],
   },
   {
-    id: "inProgress",
     type: BoardType.InProgress,
     data: [
       { creationDate: "", id: v4(), name: "Deploy server" },
@@ -25,7 +23,6 @@ const API_MOCK_DATA: TaskBoard[] = [
     availableToTransitionBoardTypes: [BoardType.Completed, BoardType.Deleted],
   },
   {
-    id: "completed",
     type: BoardType.Completed,
     data: [],
     name: "completed",
@@ -33,7 +30,6 @@ const API_MOCK_DATA: TaskBoard[] = [
   },
 
   {
-    id: "delete",
     type: BoardType.Deleted,
     data: [{ creationDate: "", id: v4(), name: "implement home page" }],
     name: "deleted",

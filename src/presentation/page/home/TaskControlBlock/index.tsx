@@ -29,9 +29,9 @@ const TaskControlBlock: FC = () => {
 
   const moveBetweenContainers = (
     items: TaskBoard[],
-    activeContainerId: TaskBoard["id"],
+    activeContainerId: TaskBoard["type"],
     activeIndex: number,
-    overContainerId: TaskBoard["id"],
+    overContainerId: TaskBoard["type"],
     overIndex: number,
     activeItemId: Task["id"],
   ): TaskBoard[] => {
@@ -39,7 +39,7 @@ const TaskControlBlock: FC = () => {
     let removedTask: Task | undefined
 
     const boardsWithRemovedActiveTask = items.map((item) => {
-      if (item.id === activeContainerId) {
+      if (item.type === activeContainerId) {
         removedTask = item.data[activeIndex]
         const data = removeAtIndex(item.data, activeIndex)
 
@@ -54,7 +54,7 @@ const TaskControlBlock: FC = () => {
     }
 
     return boardsWithRemovedActiveTask.map((item) => {
-      if (item.id === overContainerId) {
+      if (item.type === overContainerId) {
         const data = insertAtIndex(item.data, overIndex, removedTask as Task)
 
         return { ...item, data }
@@ -68,23 +68,24 @@ const TaskControlBlock: FC = () => {
     const { over, active } = event
     const overId = over?.id
     const activeDataCurrent = active.data.current
+    const overDataCurrent = over?.data.current
 
     if (!overId || !activeDataCurrent) {
       return
     }
 
     if (active.id !== over.id) {
-      const activeContainerId = activeDataCurrent.sortable.containerId
-      const overContainerId = over.data.current?.sortable.containerId || over.id
+      const activeContainerType = activeDataCurrent.sortable.containerId
+      const overContainerType = overDataCurrent?.sortable.containerId || over.id
       const activeIndex = activeDataCurrent.sortable.index
-      const overIndex = over.data.current?.sortable.index || 0
+      const overIndex = overDataCurrent?.sortable.index || 0
 
       setItems((items) => {
-        let newItems
+        let newItems = items
 
-        if (activeContainerId === overContainerId) {
+        if (activeContainerType === overContainerType) {
           newItems = items.map((item) => {
-            if (item.id === overContainerId) {
+            if (item.type === overContainerType) {
               const data = arrayMove(item.data, activeIndex, overIndex)
 
               return { ...item, data }
@@ -93,14 +94,24 @@ const TaskControlBlock: FC = () => {
             return item
           })
         } else {
-          newItems = moveBetweenContainers(
-            items,
-            activeContainerId,
-            activeIndex,
-            overContainerId,
-            overIndex,
-            active.id as string,
+          const activeBoard = items.find(
+            ({ type }) => type === activeContainerType,
           )
+
+          if (
+            activeBoard?.availableToTransitionBoardTypes.includes(
+              overContainerType,
+            )
+          ) {
+            newItems = moveBetweenContainers(
+              items,
+              activeContainerType,
+              activeIndex,
+              overContainerType,
+              overIndex,
+              active.id as string,
+            )
+          }
         }
 
         return newItems
@@ -126,7 +137,7 @@ const TaskControlBlock: FC = () => {
     >
       <div style={containerStyle}>
         {items.map((board) => (
-          <Droppable data={board} key={board.id} />
+          <Droppable data={board} key={board.type} />
         ))}
       </div>
       <DragOverlay adjustScale style={{ transformOrigin: "0 0 " }}>

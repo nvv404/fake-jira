@@ -10,8 +10,8 @@ type PropsT = {
 
 const Droppable: FC<PropsT> = (props) => {
   const { data } = props
-  const { id, data: items, name } = data
-  const { setNodeRef } = useDroppable({ id })
+  const { type, data: items, name } = data
+  const { setNodeRef } = useDroppable({ id: type })
 
   const droppableStyle = {
     padding: "20px 10px",
@@ -22,7 +22,7 @@ const Droppable: FC<PropsT> = (props) => {
   }
 
   return (
-    <SortableContext id={id} items={items} strategy={rectSortingStrategy}>
+    <SortableContext id={type} items={items} strategy={rectSortingStrategy}>
       {name}
       <div ref={setNodeRef} style={droppableStyle}>
         {items.map((item) => (
