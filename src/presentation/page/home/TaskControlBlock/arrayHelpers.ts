@@ -1,22 +1,20 @@
 import { arrayMove as dndKitArrayMove } from "@dnd-kit/sortable"
+import Task from "domain/entity/TaskBoard/Task"
 
-export const removeAtIndex = (
-  array: Array<string | number>,
-  index: number,
-): Array<string | number> => {
+export const removeAtIndex = (array: Task[], index: number): Task[] => {
   return [...array.slice(0, index), ...array.slice(index + 1)]
 }
 
 export const insertAtIndex = (
-  array: Array<string | number>,
+  array: Task[],
   index: number,
-  item: string | number,
-): Array<string | number> => {
+  item: Task,
+): Task[] => {
   return [...array.slice(0, index), item, ...array.slice(index)]
 }
 
 export const arrayMove = (
-  array: Array<string | number>,
+  array: Task[],
   oldIndex: number,
   newIndex: number,
 ) => {

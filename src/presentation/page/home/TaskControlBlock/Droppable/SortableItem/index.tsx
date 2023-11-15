@@ -1,14 +1,16 @@
 import { FC } from "react"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
+import Task from "domain/entity/TaskBoard/Task"
 import { Wrapper } from "./styles"
 
 type PropsT = {
-  id: string | number
+  data: Task
 }
 
 const SortableItem: FC<PropsT> = (props) => {
-  const { id } = props
+  const { data } = props
+  const { id, name } = data
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id })
 
@@ -19,7 +21,7 @@ const SortableItem: FC<PropsT> = (props) => {
 
   return (
     <Wrapper style={itemStyle} ref={setNodeRef} {...attributes} {...listeners}>
-      Item {props.id}
+      Item {name}
     </Wrapper>
   )
 }

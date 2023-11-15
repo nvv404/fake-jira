@@ -1,14 +1,16 @@
 import { FC } from "react"
 import { useDroppable } from "@dnd-kit/core"
 import { rectSortingStrategy, SortableContext } from "@dnd-kit/sortable"
+import TaskBoard from "domain/entity/TaskBoard/TaskBoard"
 import SortableItem from "./SortableItem"
 
 type PropsT = {
-  id: string | number
-  items: Array<string | number>
+  data: TaskBoard
 }
 
-const Droppable: FC<PropsT> = ({ id, items }) => {
+const Droppable: FC<PropsT> = (props) => {
+  const { data } = props
+  const { id, data: items, name } = data
   const { setNodeRef } = useDroppable({ id })
 
   const droppableStyle = {
@@ -20,15 +22,11 @@ const Droppable: FC<PropsT> = ({ id, items }) => {
   }
 
   return (
-    <SortableContext
-      id={String(id)}
-      items={items}
-      strategy={rectSortingStrategy}
-    >
-      {id}
+    <SortableContext id={id} items={items} strategy={rectSortingStrategy}>
+      {name}
       <div ref={setNodeRef} style={droppableStyle}>
         {items.map((item) => (
-          <SortableItem key={item} id={item} />
+          <SortableItem key={item.id} data={item} />
         ))}
       </div>
     </SortableContext>

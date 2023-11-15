@@ -9,19 +9,15 @@ import {
   useSensors,
 } from "@dnd-kit/core"
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable"
+import TaskBoard from "domain/entity/TaskBoard/TaskBoard"
 import Droppable from "./Droppable"
 import { arrayMove, insertAtIndex, removeAtIndex } from "./arrayHelpers"
-
-type ItemsT = {
-  [key: string]: Array<string | number>
-}
+import useAppSelector from "presentation/hook/useAppSelector"
+import Task from "domain/entity/TaskBoard/Task"
 
 const TaskControlBlock: FC = () => {
-  const [items, setItems] = useState<ItemsT>({
-    group1: ["1", "2", "3"],
-    group2: ["4", "5", "6"],
-    group3: ["7", "8", "9"],
-  })
+  const { data } = useAppSelector(({ tasksBoard }) => tasksBoard)
+  const [items, setItems] = useState<TaskBoard[]>(data)
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -31,25 +27,40 @@ const TaskControlBlock: FC = () => {
   )
 
   const moveBetweenContainers = (
-    items: ItemsT,
-    activeContainerKey: string ,
+    items: TaskBoard[],
+    activeContainerId: TaskBoard["id"],
     activeIndex: number,
-    overContainerKey: string,
+    overContainerId: TaskBoard["id"],
     overIndex: number,
-    item: string | number,
-  ): ItemsT => {
-    return {
-      ...items,
-      [activeContainerKey]: removeAtIndex(
-        items[activeContainerKey],
-        activeIndex,
-      ),
-      [overContainerKey]: insertAtIndex(
-        items[overContainerKey],
-        overIndex,
-        item,
-      ),
+    activeItemId: Task["id"],
+  ): TaskBoard[] => {
+    // TODO: Can we remove removedTask var ?
+    let removedTask: Task | undefined
+
+    const boardsWithRemovedActiveTask = items.map((item) => {
+      if (item.id === activeContainerId) {
+        removedTask = item.data[activeIndex]
+        const data = removeAtIndex(item.data, activeIndex)
+
+        return { ...item, data }
+      }
+
+      return item
+    })
+
+    if (!removedTask) {
+      return items
     }
+
+    return boardsWithRemovedActiveTask.map((item) => {
+      if (item.id === overContainerId) {
+        const data = insertAtIndex(item.data, overIndex, removedTask as Task)
+
+        return { ...item, data }
+      }
+
+      return item
+    })
   }
 
   const handleDragOver = (event: DragOverEvent) => {
@@ -61,25 +72,26 @@ const TaskControlBlock: FC = () => {
       return
     }
 
-    const activeContainerKey = activeDataCurrent.sortable.containerId
-    const overContainer = over.data.current?.sortable.containerId
+    const activeContainerId = activeDataCurrent.sortable.containerId
+    const overContainerId = over.data.current?.sortable.containerId
 
-    if (!overContainer) {
+    if (!overContainerId) {
       return
     }
 
-    if (activeContainerKey !== overContainer) {
-      setItems((items) => {
+    if (activeContainerId !== overContainerId) {
+      setItems((prevState) => {
         const activeIndex = activeDataCurrent.sortable.index
         const overIndex = over.data.current?.sortable.index || 0
 
         return moveBetweenContainers(
-          items,
-          activeContainerKey,
+          prevState,
+          activeContainerId,
           activeIndex,
-          overContainer,
+          overContainerId,
           overIndex,
-          active.id,
+          // TODO: Try to remove as string expression
+          active.id as string,
         )
       })
     }
@@ -104,14 +116,15 @@ const TaskControlBlock: FC = () => {
         let newItems
 
         if (activeContainer === overContainerKey) {
-          newItems = {
-            ...items,
-            [overContainerKey]: arrayMove(
-              items[overContainerKey],
-              activeIndex,
-              overIndex,
-            ),
-          }
+          newItems = items.map((item) => {
+            if (item.id === overContainerKey) {
+              const data = arrayMove(item.data, activeIndex, overIndex)
+
+              return { ...item, data }
+            }
+
+            return item
+          })
         } else {
           newItems = moveBetweenContainers(
             items,
@@ -119,7 +132,7 @@ const TaskControlBlock: FC = () => {
             activeIndex,
             overContainerKey,
             overIndex,
-            active.id,
+            active.id as string,
           )
         }
 
@@ -137,8 +150,8 @@ const TaskControlBlock: FC = () => {
       onDragOver={handleDragOver}
     >
       <div style={containerStyle}>
-        {Object.keys(items).map((group) => (
-          <Droppable id={group} items={items[group]} key={group} />
+        {items.map((board) => (
+          <Droppable data={board} key={board.id} />
         ))}
       </div>
     </DndContext>

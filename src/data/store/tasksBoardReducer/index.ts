@@ -1,33 +1,34 @@
+import { v4 } from "uuid"
 import { createSlice } from "@reduxjs/toolkit"
-import TasksBoard from "domain/entity/TasksBoard/TasksBoard"
+import TaskBoard from "domain/entity/TaskBoard/TaskBoard"
 
-const API_MOCK_DATA: TasksBoard[] = [
+const API_MOCK_DATA: TaskBoard[] = [
   {
-    id: 0,
-    items: [
-      { creationDate: "", id: 0, name: "Make homework" },
-      { creationDate: "", id: 1, name: "cook pizza" },
+    id: "todo",
+    data: [
+      { creationDate: "", id: v4(), name: "Make homework" },
+      { creationDate: "", id: v4(), name: "cook pizza" },
     ],
-    title: "to do",
+    name: "to do",
   },
   {
-    id: 1,
-    items: [
-      { creationDate: "", id: 0, name: "Deploy server" },
-      { creationDate: "", id: 1, name: "update project deps" },
+    id: "inProgress",
+    data: [
+      { creationDate: "", id: v4(), name: "Deploy server" },
+      { creationDate: "", id: v4(), name: "update project deps" },
     ],
-    title: "in progress",
+    name: "in progress",
   },
-  { id: 2, items: [], title: "completed" },
+  { id: "completed", data: [], name: "completed" },
   {
-    id: 3,
-    items: [{ creationDate: "", id: 0, name: "implement home page" }],
-    title: "deleted",
+    id: "delete",
+    data: [{ creationDate: "", id: v4(), name: "implement home page" }],
+    name: "deleted",
   },
 ]
 
 type StateT = {
-  data: TasksBoard[]
+  data: TaskBoard[]
 }
 
 const initialState: StateT = {
