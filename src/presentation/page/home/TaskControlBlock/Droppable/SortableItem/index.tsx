@@ -1,28 +1,32 @@
-import { FC } from "react"
+import React, { FC } from "react"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
-import Task from "domain/entity/TaskBoard/Task"
-import { Wrapper } from "./styles"
+import Item, { ItemProps } from "presentation/page/home/TaskControlBlock/Item"
 
-type PropsT = {
-  data: Task
-}
-
-const SortableItem: FC<PropsT> = (props) => {
-  const { data } = props
-  const { id, name } = data
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id })
-
-  const itemStyle = {
-    transform: CSS.Transform.toString(transform),
+const SortableItem: FC<ItemProps> = (props) => {
+  const {
+    isDragging,
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
     transition,
+  } = useSortable({ id: props.id })
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition: transition || undefined,
   }
 
   return (
-    <Wrapper style={itemStyle} ref={setNodeRef} {...attributes} {...listeners}>
-      Item {name}
-    </Wrapper>
+    <Item
+      ref={setNodeRef}
+      style={style}
+      withOpacity={isDragging}
+      {...props}
+      {...attributes}
+      {...listeners}
+    />
   )
 }
 

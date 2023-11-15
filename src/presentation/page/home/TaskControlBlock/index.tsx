@@ -1,30 +1,31 @@
-import { useState, FC } from "react"
+import { FC, useCallback, useState } from "react"
 import {
   DndContext,
   DragEndEvent,
-  DragOverEvent,
-  KeyboardSensor,
-  PointerSensor,
+  DragOverlay,
+  DragStartEvent,
+  MouseSensor,
+  TouchSensor,
+  closestCenter,
   useSensor,
   useSensors,
 } from "@dnd-kit/core"
-import { sortableKeyboardCoordinates } from "@dnd-kit/sortable"
-import TaskBoard from "domain/entity/TaskBoard/TaskBoard"
-import Droppable from "./Droppable"
-import { arrayMove, insertAtIndex, removeAtIndex } from "./arrayHelpers"
-import useAppSelector from "presentation/hook/useAppSelector"
 import Task from "domain/entity/TaskBoard/Task"
+import TaskBoard from "domain/entity/TaskBoard/TaskBoard"
+import useAppSelector from "presentation/hook/useAppSelector"
+import { arrayMove, insertAtIndex, removeAtIndex } from "./arrayHelpers"
+import Droppable from "./Droppable"
+import Item from "./Item"
 
 const TaskControlBlock: FC = () => {
   const { data } = useAppSelector(({ tasksBoard }) => tasksBoard)
   const [items, setItems] = useState<TaskBoard[]>(data)
+  const [activeId, setActiveId] = useState<Task["id"] | null>(null)
+  const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor))
 
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
-  )
+  const handleDragStart = useCallback((event: DragStartEvent) => {
+    setActiveId(event.active.id as string)
+  }, [])
 
   const moveBetweenContainers = (
     items: TaskBoard[],
@@ -63,7 +64,7 @@ const TaskControlBlock: FC = () => {
     })
   }
 
-  const handleDragOver = (event: DragOverEvent) => {
+  const handleDragEnd = useCallback((event: DragEndEvent) => {
     const { over, active } = event
     const overId = over?.id
     const activeDataCurrent = active.data.current
@@ -72,52 +73,18 @@ const TaskControlBlock: FC = () => {
       return
     }
 
-    const activeContainerId = activeDataCurrent.sortable.containerId
-    const overContainerId = over.data.current?.sortable.containerId
-
-    if (!overContainerId) {
-      return
-    }
-
-    if (activeContainerId !== overContainerId) {
-      setItems((prevState) => {
-        const activeIndex = activeDataCurrent.sortable.index
-        const overIndex = over.data.current?.sortable.index || 0
-
-        return moveBetweenContainers(
-          prevState,
-          activeContainerId,
-          activeIndex,
-          overContainerId,
-          overIndex,
-          // TODO: Try to remove as string expression
-          active.id as string,
-        )
-      })
-    }
-  }
-
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event
-    const activeDataCurrent = active.data.current
-
-    if (!over || !activeDataCurrent) {
-      return
-    }
-
     if (active.id !== over.id) {
-      const activeContainer = activeDataCurrent.sortable.containerId
-      const overContainerKey =
-        over.data.current?.sortable.containerId || over.id
+      const activeContainerId = activeDataCurrent.sortable.containerId
+      const overContainerId = over.data.current?.sortable.containerId || over.id
       const activeIndex = activeDataCurrent.sortable.index
       const overIndex = over.data.current?.sortable.index || 0
 
       setItems((items) => {
         let newItems
 
-        if (activeContainer === overContainerKey) {
+        if (activeContainerId === overContainerId) {
           newItems = items.map((item) => {
-            if (item.id === overContainerKey) {
+            if (item.id === overContainerId) {
               const data = arrayMove(item.data, activeIndex, overIndex)
 
               return { ...item, data }
@@ -128,9 +95,9 @@ const TaskControlBlock: FC = () => {
         } else {
           newItems = moveBetweenContainers(
             items,
-            activeContainer,
+            activeContainerId,
             activeIndex,
-            overContainerKey,
+            overContainerId,
             overIndex,
             active.id as string,
           )
@@ -139,21 +106,32 @@ const TaskControlBlock: FC = () => {
         return newItems
       })
     }
-  }
+
+    setActiveId(null)
+  }, [])
+
+  const handleDragCancel = useCallback(() => {
+    setActiveId(null)
+  }, [])
 
   const containerStyle = { display: "flex" }
 
   return (
     <DndContext
       sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-      onDragOver={handleDragOver}
+      onDragCancel={handleDragCancel}
     >
       <div style={containerStyle}>
         {items.map((board) => (
           <Droppable data={board} key={board.id} />
         ))}
       </div>
+      <DragOverlay adjustScale style={{ transformOrigin: "0 0 " }}>
+        {activeId ? <Item id={activeId} isDragging /> : null}
+      </DragOverlay>
     </DndContext>
   )
 }
