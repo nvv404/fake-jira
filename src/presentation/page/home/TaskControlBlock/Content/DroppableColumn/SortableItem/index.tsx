@@ -4,6 +4,8 @@ import { CSS } from "@dnd-kit/utilities"
 import Item, { ItemProps } from "presentation/page/home/TaskControlBlock/Item"
 
 const SortableItem: FC<ItemProps> = (props) => {
+  const { data } = props
+  const { id } = data
   const {
     isDragging,
     attributes,
@@ -11,7 +13,7 @@ const SortableItem: FC<ItemProps> = (props) => {
     setNodeRef,
     transform,
     transition,
-  } = useSortable({ id: props.id })
+  } = useSortable({ id: id })
 
   const style = {
     transform: CSS.Transform.toString(transform),

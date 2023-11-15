@@ -20,7 +20,7 @@ const DroppableColumn: FC<PropsT> = (props) => {
         {name}
         <Inner ref={setNodeRef}>
           {items.map((item) => (
-            <SortableItem key={item.id} id={item.id} />
+            <SortableItem data={item} key={item.id} />
           ))}
         </Inner>
       </Wrapper>

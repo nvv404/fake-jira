@@ -20,12 +20,25 @@ import Item from "./Item"
 const TaskControlBlock: FC = () => {
   const { data } = useAppSelector(({ tasksBoard }) => tasksBoard)
   const [items, setItems] = useState<TaskBoard[]>(data)
-  const [activeId, setActiveId] = useState<Task["id"] | null>(null)
+  const [activeTask, setActiveTask] = useState<Task | null>(null)
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor))
 
-  const handleDragStart = useCallback((event: DragStartEvent) => {
-    setActiveId(event.active.id as string)
-  }, [])
+  const handleDragStart = useCallback(
+    (event: DragStartEvent) => {
+      const { active } = event
+      const board = items.find(
+        ({ type }) => type === active.data.current?.sortable.containerId,
+      )
+
+      if (!board) {
+        return
+      }
+      const task = board.data.find(({ id }) => id === active.id)
+
+      setActiveTask(task || null)
+    },
+    [items],
+  )
 
   const moveBetweenContainers = (
     items: TaskBoard[],
@@ -118,11 +131,11 @@ const TaskControlBlock: FC = () => {
       })
     }
 
-    setActiveId(null)
+    setActiveTask(null)
   }, [])
 
   const handleDragCancel = useCallback(() => {
-    setActiveId(null)
+    setActiveTask(null)
   }, [])
 
   return (
@@ -134,8 +147,8 @@ const TaskControlBlock: FC = () => {
       onDragCancel={handleDragCancel}
     >
       <Content items={items} />
-      <DragOverlay adjustScale style={{ transformOrigin: "0 0 " }}>
-        {activeId ? <Item id={activeId} isDragging /> : null}
+      <DragOverlay>
+        {activeTask ? <Item data={activeTask} isDragging /> : null}
       </DragOverlay>
     </DndContext>
   )
