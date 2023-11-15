@@ -14,7 +14,7 @@ import Task from "domain/entity/TaskBoard/Task"
 import TaskBoard from "domain/entity/TaskBoard/TaskBoard"
 import useAppSelector from "presentation/hook/useAppSelector"
 import { arrayMove, insertAtIndex, removeAtIndex } from "./arrayHelpers"
-import Droppable from "./Droppable"
+import Content from "./Content"
 import Item from "./Item"
 
 const TaskControlBlock: FC = () => {
@@ -125,8 +125,6 @@ const TaskControlBlock: FC = () => {
     setActiveId(null)
   }, [])
 
-  const containerStyle = { display: "flex" }
-
   return (
     <DndContext
       sensors={sensors}
@@ -135,11 +133,7 @@ const TaskControlBlock: FC = () => {
       onDragEnd={handleDragEnd}
       onDragCancel={handleDragCancel}
     >
-      <div style={containerStyle}>
-        {items.map((board) => (
-          <Droppable data={board} key={board.type} />
-        ))}
-      </div>
+      <Content items={items} />
       <DragOverlay adjustScale style={{ transformOrigin: "0 0 " }}>
         {activeId ? <Item id={activeId} isDragging /> : null}
       </DragOverlay>

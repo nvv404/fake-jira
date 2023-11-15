@@ -1,6 +1,11 @@
 import styled from "@emotion/styled"
 
-export const Wrapper = styled.div()
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--container-gutter);
+  min-height: 100vh;
+`
 
 export const Header = styled.header`
   display: flex;
