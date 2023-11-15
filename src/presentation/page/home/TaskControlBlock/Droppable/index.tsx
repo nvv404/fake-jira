@@ -18,7 +18,7 @@ const Droppable: FC<PropsT> = (props) => {
     border: "1px solid black",
     borderRadius: "5px",
     minWidth: 110,
-    // touchAction: "none",
+    touchAction: "none",
   }
 
   return (
