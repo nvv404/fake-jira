@@ -18,10 +18,11 @@ const theme: ThemeT = {
   },
   colors: {
     background: "#22092C",
-    mainDark: "#872341",
-    mainMedium: "#BE3144",
-    mainLight: "#F05941",
-    text: "#FCFBF4",
+    primaryDark: "#872341",
+    primaryMain: "#BE3144",
+    primaryLight: "#F05941",
+    textMain: "#FCFBF4",
+    textDark: "#e8e9ed",
   },
 }
 

@@ -12,7 +12,7 @@ export const Header = styled.header`
   align-items: center;
   justify-content: center;
   padding: 30px 0;
-  border-bottom: 2px solid ${({ theme }) => theme.colors.mainDark};
+  border-bottom: 2px solid ${({ theme }) => theme.colors.primaryDark};
 `
 
 export const Footer = styled.footer`
@@ -20,7 +20,7 @@ export const Footer = styled.footer`
   align-items: center;
   justify-content: center;
   padding: 30px 0;
-  border-top: 2px solid ${({ theme }) => theme.colors.mainDark};
+  border-top: 2px solid ${({ theme }) => theme.colors.primaryDark};
   margin-top: auto;
 `
 

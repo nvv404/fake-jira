@@ -1,11 +1,17 @@
-import { configureStore } from "@reduxjs/toolkit"
+import {
+  PreloadedState,
+  combineReducers,
+  configureStore,
+} from "@reduxjs/toolkit"
 import tasksBoardReducer from "data/store/tasksBoardReducer"
 
-const setupStore = () =>
+const rootReducer = combineReducers({
+  tasksBoard: tasksBoardReducer,
+})
+
+export const setupStore = (preloadedState?: PreloadedState<RootState>) =>
   configureStore({
-    reducer: {
-      tasksBoard: tasksBoardReducer,
-    },
+    reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: false,
@@ -14,9 +20,9 @@ const setupStore = () =>
 
 const store = setupStore()
 
-type RootState = ReturnType<typeof store.getState>
+type RootState = ReturnType<typeof rootReducer>
 type AppStore = ReturnType<typeof setupStore>
 type AppDispatch = AppStore["dispatch"]
 
 export { store }
-export type { RootState, AppDispatch }
+export type { RootState, AppStore, AppDispatch }
