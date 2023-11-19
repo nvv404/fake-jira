@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react"
+import { FC, useCallback, useEffect, useState } from "react"
 import {
   DndContext,
   DragEndEvent,
@@ -137,6 +137,10 @@ const TaskControlBlock: FC = () => {
   const handleDragCancel = useCallback(() => {
     setActiveTask(null)
   }, [])
+
+  useEffect(() => {
+    setItems(data)
+  }, [data])
 
   return (
     <DndContext
