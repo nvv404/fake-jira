@@ -1,19 +1,41 @@
-import { createSlice } from "@reduxjs/toolkit"
+import {
+  createSlice,
+  isFulfilled,
+  isPending,
+  isRejected,
+} from "@reduxjs/toolkit"
 import TaskBoard from "domain/entity/TaskBoard/TaskBoard"
-import TASK_BOARD_MOCK_DATA from "data/__mock__/taskBoardMockData.ts"
+import { fetchTaskBoards } from "data/store/tasksBoardReducer/api/actions"
 
 type StateT = {
   data: TaskBoard[]
+  isLoading: boolean
 }
 
 const initialState: StateT = {
-  data: TASK_BOARD_MOCK_DATA,
+  data: [],
+  isLoading: false,
 }
 
 const tasksBoardSlice = createSlice({
   name: "tasksBoard",
   initialState,
   reducers: {},
+  extraReducers(builder) {
+    builder.addCase(fetchTaskBoards.fulfilled, (state, { payload }) => {
+      state.data = payload
+    })
+
+    builder.addMatcher(isPending, (state) => {
+      state.isLoading = true
+    })
+    builder.addMatcher(isRejected, (state) => {
+      state.isLoading = false
+    })
+    builder.addMatcher(isFulfilled, (state) => {
+      state.isLoading = false
+    })
+  },
 })
 
 export default tasksBoardSlice.reducer
