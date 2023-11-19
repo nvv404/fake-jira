@@ -2,7 +2,7 @@ import { screen } from "@testing-library/react"
 import { describe, it } from "vitest"
 import TASK_BOARD_MOCK_DATA from "data/__mock__/taskBoardMockData.ts"
 import { renderWithProviders } from "presentation/utils/renderWithProviders"
-import TaskControlBlock from "presentation/page/home/TaskControlBlock"
+import TaskControlBlock from "presentation/component/page/home/TaskControlBlock"
 
 describe("Kanban control block layout", () => {
   it("render kanban with mock items", async () => {

@@ -1,10 +1,10 @@
 import Layout from "presentation/component/layout"
-import HomePage from "presentation/page/home"
+import Home from "presentation/pageContainer/Home"
 
 function App() {
   return (
     <Layout>
-      <HomePage />
+      <Home />
     </Layout>
   )
 }

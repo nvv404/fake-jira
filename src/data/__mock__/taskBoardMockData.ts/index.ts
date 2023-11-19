@@ -6,8 +6,16 @@ const TASK_BOARD_MOCK_DATA: TaskBoard[] = [
   {
     type: BoardType.Todo,
     data: [
-      { creationDate: "", id: v4(), name: "Make homework" },
-      { creationDate: "", id: v4(), name: "cook pizza" },
+      {
+        creationDate: "2023-11-12T11:55:18.826Z",
+        id: v4(),
+        name: "Make homework",
+      },
+      {
+        creationDate: "2023-09-02T12:55:18.826Z",
+        id: v4(),
+        name: "cook pizza",
+      },
     ],
     name: "to do",
     availableToTransitionBoardTypes: [BoardType.InProgress],
@@ -15,8 +23,16 @@ const TASK_BOARD_MOCK_DATA: TaskBoard[] = [
   {
     type: BoardType.InProgress,
     data: [
-      { creationDate: "", id: v4(), name: "Deploy server" },
-      { creationDate: "", id: v4(), name: "update project deps" },
+      {
+        creationDate: "2022-01-02T12:55:18.826Z",
+        id: v4(),
+        name: "Deploy server",
+      },
+      {
+        creationDate: "2023-11-04T12:55:18.826Z",
+        id: v4(),
+        name: "update project deps",
+      },
     ],
     name: "in progress",
     availableToTransitionBoardTypes: [BoardType.Completed, BoardType.Deleted],
@@ -30,7 +46,13 @@ const TASK_BOARD_MOCK_DATA: TaskBoard[] = [
 
   {
     type: BoardType.Deleted,
-    data: [{ creationDate: "", id: v4(), name: "implement home page" }],
+    data: [
+      {
+        creationDate: "2023-11-04T12:55:18.826Z",
+        id: v4(),
+        name: "implement home page",
+      },
+    ],
     name: "deleted",
     availableToTransitionBoardTypes: [BoardType.InProgress],
   },

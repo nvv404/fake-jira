@@ -3,7 +3,7 @@ import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import Item, {
   ItemProps,
-} from "presentation/page/home/TaskControlBlock/common/Item"
+} from "presentation/component/page/home/TaskControlBlock/common/Item"
 
 const SortableItem: FC<ItemProps> = (props) => {
   const { data } = props

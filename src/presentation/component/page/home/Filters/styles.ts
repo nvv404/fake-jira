@@ -12,7 +12,7 @@ export const Button = styled(BaseButton)`
 `
 
 export const DatePicker = styled(BaseDatePicker)`
-  &:first-child {
+  &:first-of-type {
     margin-right: 10px;
   }
 `

@@ -1,6 +1,9 @@
 import { forwardRef, HTMLAttributes } from "react"
+import dayjs from "dayjs"
 import Task from "domain/entity/TaskBoard/Task"
-import { Wrapper } from "./styles"
+import { Wrapper, Title, Text } from "./styles"
+
+const DATE_FORMAT = "DD/MM/YYYY"
 
 export type ItemProps = HTMLAttributes<HTMLLIElement> & {
   data: Task
@@ -21,8 +24,8 @@ const Item = forwardRef<HTMLLIElement, ItemProps>((props, ref) => {
       style={style}
       {...restProps}
     >
-      {name}
-      {creationDate}
+      <Title>{name}</Title>
+      <Text>Created: {dayjs(creationDate).format(DATE_FORMAT)}</Text>
     </Wrapper>
   )
 })

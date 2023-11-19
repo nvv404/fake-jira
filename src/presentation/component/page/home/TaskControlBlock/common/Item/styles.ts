@@ -1,5 +1,6 @@
 import lighten from "polished/lib/color/lighten"
 import styled from "@emotion/styled"
+import BaseText from "presentation/component/common/typography/Text"
 
 type WrapperPropsT = {
   isWithOpacity?: boolean
@@ -8,6 +9,7 @@ type WrapperPropsT = {
 
 export const Wrapper = styled.li<WrapperPropsT>`
   display: flex;
+  flex-direction: column;
   opacity: ${({ isWithOpacity }) => (isWithOpacity ? "0.5" : "1")};
   transform-origin: 50% 50%;
   height: 100px;
@@ -28,4 +30,10 @@ export const Wrapper = styled.li<WrapperPropsT>`
   &:hover {
     background-color: ${({ theme }) => lighten(0.04, theme.colors.primaryMain)};
   }
+`
+
+export const Title = styled(BaseText)()
+
+export const Text = styled(BaseText)`
+  margin-top: auto;
 `
