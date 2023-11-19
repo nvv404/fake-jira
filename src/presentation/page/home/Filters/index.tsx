@@ -2,18 +2,38 @@ import { FC, useState } from "react"
 import DatePicker, {
   ValueT as DatePickerValueT,
 } from "presentation/component/common/control/DatePicker"
-import { Wrapper } from "./styles"
+import { Wrapper, Button } from "./styles"
+
+type StateT = {
+  startDate: DatePickerValueT
+  endDate: DatePickerValueT
+}
 
 const Filters: FC = () => {
-  const [startDate, setStartDate] = useState<DatePickerValueT>(null)
+  const [dateState, setDateState] = useState<StateT>({
+    endDate: null,
+    startDate: null,
+  })
 
-  const handleDatePickerChange = (value: DatePickerValueT): void => {
-    setStartDate(value)
+  const handleStartDatePickerChange = (startDate: DatePickerValueT): void => {
+    setDateState((value) => ({ ...value, startDate }))
+  }
+
+  const handleEndDatePickerChange = (endDate: DatePickerValueT): void => {
+    setDateState((value) => ({ ...value, endDate }))
   }
 
   return (
     <Wrapper>
-      <DatePicker value={startDate} onChange={handleDatePickerChange} />
+      <DatePicker
+        value={dateState.startDate}
+        onChange={handleStartDatePickerChange}
+      />
+      <DatePicker
+        value={dateState.endDate}
+        onChange={handleEndDatePickerChange}
+      />
+      <Button>Найти</Button>
     </Wrapper>
   )
 }
