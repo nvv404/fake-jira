@@ -6,6 +6,7 @@ export type ValueT = string | null
 type PropsT = {
   value: ValueT
   onChange: (value: ValueT) => void
+  disabled?: boolean
 }
 
 const DatePicker: FC<PropsT> = (props) => {

@@ -1,7 +1,8 @@
 import { FC } from "react"
 import TaskBoard from "domain/entity/TaskBoard/TaskBoard"
+import useAppSelector from "presentation/hook/useAppSelector"
 import DroppableColumn from "./DroppableColumn"
-import { Wrapper } from "./styles"
+import { Wrapper, Progress } from "./styles"
 
 type PropsT = {
   items: TaskBoard[]
@@ -9,12 +10,13 @@ type PropsT = {
 
 const Content: FC<PropsT> = (props) => {
   const { items } = props
+  const { isLoading } = useAppSelector(({ tasksBoard }) => tasksBoard)
 
   return (
     <Wrapper>
-      {items.map((board) => (
-        <DroppableColumn data={board} key={board.type} />
-      ))}
+      {!isLoading &&
+        items.map((board) => <DroppableColumn data={board} key={board.type} />)}
+      {isLoading && <Progress size={50} />}
     </Wrapper>
   )
 }

@@ -15,7 +15,7 @@ export const fetchTaskBoards = createAsyncThunk<
     const { endDate, startDate } = payload
     // Fake api call
     const data = await new Promise<TaskBoard[]>((resolve) =>
-      setTimeout(() => resolve(TASK_BOARD_MOCK_DATA), 3000),
+      setTimeout(() => resolve(TASK_BOARD_MOCK_DATA), 2000),
     )
 
     /*
@@ -24,16 +24,23 @@ export const fetchTaskBoards = createAsyncThunk<
     */
     const formattedData: TaskBoard[] = data.map((board) => {
       const filteredData = board.data.filter((task) => {
+        const parsedTaskCreationDate = Date.parse(task.creationDate)
+        const parsedStartFilterDate = Date.parse(startDate || "")
+        const parsedEndFilterDate = Date.parse(endDate || "")
+
         if (startDate && endDate) {
-          return task.creationDate >= startDate && task.creationDate <= endDate
+          return (
+            parsedTaskCreationDate >= parsedStartFilterDate &&
+            parsedTaskCreationDate <= parsedEndFilterDate
+          )
         }
 
         if (startDate) {
-          return task.creationDate >= startDate
+          return parsedTaskCreationDate >= parsedStartFilterDate
         }
 
         if (endDate) {
-          return task.creationDate <= endDate
+          return parsedTaskCreationDate <= parsedEndFilterDate
         }
 
         return true
