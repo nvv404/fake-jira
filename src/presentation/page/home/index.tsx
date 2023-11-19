@@ -6,7 +6,7 @@ import { Wrapper, Title } from "./styles"
 const HomePage: FC = () => {
   return (
     <Wrapper>
-      <Title>Board</Title>
+      <Title>Main Halloween Jira Board </Title>
       <Filters />
       <TaskControlBlock />
     </Wrapper>

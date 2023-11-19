@@ -1,7 +1,9 @@
 import React, { FC } from "react"
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
-import Item, { ItemProps } from "presentation/page/home/TaskControlBlock/Item"
+import Item, {
+  ItemProps,
+} from "presentation/page/home/TaskControlBlock/common/Item"
 
 const SortableItem: FC<ItemProps> = (props) => {
   const { data } = props

@@ -15,7 +15,7 @@ import TaskBoard from "domain/entity/TaskBoard/TaskBoard"
 import useAppSelector from "presentation/hook/useAppSelector"
 import { arrayMove, insertAtIndex, removeAtIndex } from "./arrayHelpers"
 import Content from "./Content"
-import Item from "./Item"
+import Item from "./common/Item"
 
 const TaskControlBlock: FC = () => {
   const { data } = useAppSelector(({ tasksBoard }) => tasksBoard)

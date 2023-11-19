@@ -7,4 +7,7 @@ export const Wrapper = styled.section`
   flex: 1 1 auto;
 `
 
-export const Title = styled(BaseText)().withComponent("h1")
+export const Title = styled(BaseText)`
+  font-weight: ${({ theme }) => theme.font.weight.bold};
+  font-size: 1.8rem;
+`.withComponent("h1")

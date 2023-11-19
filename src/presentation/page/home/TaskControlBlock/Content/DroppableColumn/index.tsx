@@ -3,7 +3,7 @@ import { rectSortingStrategy, SortableContext } from "@dnd-kit/sortable"
 import { useDroppable } from "@dnd-kit/core"
 import TaskBoard from "domain/entity/TaskBoard/TaskBoard"
 import SortableItem from "./SortableItem"
-import { Inner, Wrapper } from "./styles"
+import { Inner, Title, Wrapper } from "./styles"
 
 type PropsT = {
   data: TaskBoard
@@ -17,7 +17,9 @@ const DroppableColumn: FC<PropsT> = (props) => {
   return (
     <SortableContext id={type} items={items} strategy={rectSortingStrategy}>
       <Wrapper>
-        {name}
+        <Title as="h2">
+          {name} {items.length}
+        </Title>
         <Inner ref={setNodeRef}>
           {items.map((item) => (
             <SortableItem data={item} key={item.id} />

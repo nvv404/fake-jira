@@ -1,8 +1,6 @@
 import { FC, useState } from "react"
-import DatePicker, {
-  ValueT as DatePickerValueT,
-} from "presentation/component/common/control/DatePicker"
-import { Wrapper, Button } from "./styles"
+import { ValueT as DatePickerValueT } from "presentation/component/common/control/DatePicker"
+import { Wrapper, Button, DatePicker } from "./styles"
 
 type StateT = {
   startDate: DatePickerValueT
