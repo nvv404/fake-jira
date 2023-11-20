@@ -1,6 +1,6 @@
 import { FC } from "react"
-import Filters from "./Filters"
 import TaskControlBlock from "./TaskControlBlock"
+import Filters from "./Filters"
 import { Wrapper, Title } from "./styles"
 
 const HomePage: FC = () => {
