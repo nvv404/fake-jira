@@ -3,6 +3,8 @@ type ColorsT =
   | "primaryDark"
   | "primaryMain"
   | "primaryLight"
+  | "disabledDark"
+  | "disabledMain"
   | "textMain"
   | "textDark"
 

@@ -1,5 +1,6 @@
 import { FC } from "react"
-import { DatePicker as MuiDatePicker } from "@mui/x-date-pickers/DatePicker"
+import { StyledDatePicker } from "./styles"
+import { useTheme } from "@emotion/react"
 
 export type ValueT = string | null
 
@@ -10,7 +11,12 @@ type PropsT = {
 }
 
 const DatePicker: FC<PropsT> = (props) => {
-  return <MuiDatePicker<ValueT> {...props} />
+  const { disabled } = props
+  const theme = useTheme()
+
+  return (
+    <StyledDatePicker emotionTheme={theme} isDisabled={disabled} {...props} />
+  )
 }
 
 export default DatePicker

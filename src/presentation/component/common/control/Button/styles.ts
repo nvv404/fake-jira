@@ -22,9 +22,9 @@ export const BaseButton = styled.button<PropsT>`
   ${({ theme, variant }) => VARIANT_TO_CSS_MAP[variant](theme)};
 
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.primaryMain};
+    background-color: ${({ theme }) => theme.colors.disabledMain};
     cursor: default;
-    border-color: ${({ theme }) => theme.colors.primaryDark};
+    border-color: ${({ theme }) => theme.colors.disabledDark};
     color: ${({ theme }) => theme.colors.textDark};
   }
 

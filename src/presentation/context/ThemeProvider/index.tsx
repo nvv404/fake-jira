@@ -21,10 +21,10 @@ const baseMUITheme = createTheme(
     },
     palette: {
       primary: {
-        main: theme.colors.primaryDark,
+        main: theme.colors.primaryMain,
       },
       secondary: {
-        main: theme.colors.primaryMain,
+        main: theme.colors.primaryDark,
       },
       background: {
         default: theme.colors.background,

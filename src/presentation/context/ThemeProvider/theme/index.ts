@@ -1,3 +1,4 @@
+import rgba from "polished/lib/color/rgba"
 import { ThemeT } from "./types"
 
 const theme: ThemeT = {
@@ -21,6 +22,8 @@ const theme: ThemeT = {
     primaryDark: "#872341",
     primaryMain: "#BE3144",
     primaryLight: "#F05941",
+    disabledDark: "#8723416d",
+    disabledMain: rgba("#872341c2", 0.1),
     textMain: "#FCFBF4",
     textDark: "#e8e9ed",
   },
