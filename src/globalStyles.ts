@@ -1,6 +1,7 @@
 import { css, SerializedStyles } from "@emotion/react"
 import normalize from "polished/lib/mixins/normalize"
 import { ThemeT } from "presentation/context/ThemeProvider/theme/types"
+import { mq } from "presentation/mediaquery"
 
 const fontsCss = (theme: ThemeT): SerializedStyles => css`
   html,
@@ -32,6 +33,10 @@ const globalCss = (theme: ThemeT): SerializedStyles => css`
 
   body {
     --container-gutter: 60px;
+
+    ${mq.lowerSm} {
+      --container-gutter: 30px;
+    }
   }
 
   *,

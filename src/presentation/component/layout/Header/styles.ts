@@ -1,6 +1,7 @@
 import { keyframes } from "@emotion/react"
 import styled from "@emotion/styled"
 import { ReactComponent as BasePumpkinLogo } from "presentation/asset/svg/pumpkin.svg"
+import { mq } from "presentation/mediaquery"
 
 const bounceKeyframe = keyframes`
   from, 20%, 53%, 80%, to {
@@ -24,6 +25,11 @@ export const PumpkinLogo = styled(BasePumpkinLogo)`
   width: 80px;
   height: 80px;
   animation: ${bounceKeyframe} 1s ease;
+
+  ${mq.lowerSm} {
+    width: 70px;
+    height: 70px;
+  }
 `
 
 export const Wrapper = styled.header`
@@ -32,4 +38,8 @@ export const Wrapper = styled.header`
   justify-content: center;
   padding: 15px 0;
   border-bottom: 2px solid ${({ theme }) => theme.colors.primaryDark};
+
+  ${mq.lowerSm} {
+    padding: 10px 0;
+  }
 `

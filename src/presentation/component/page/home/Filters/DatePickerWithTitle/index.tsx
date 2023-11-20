@@ -12,7 +12,9 @@ const DatePickerWithTitle: FC<PropsT> = (props) => {
 
   return (
     <Wrapper>
-      <Text weight="semiBold">{title}</Text>
+      <Text size={1} weight="semiBold">
+        {title}
+      </Text>
       <DatePicker {...restProps} />
     </Wrapper>
   )

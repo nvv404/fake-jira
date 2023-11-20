@@ -22,7 +22,10 @@ export const StyledDatePicker = styled(MuiDatePicker<ValueT>)<PickerPropsT>`
   }
 
   .MuiInputBase-input {
+    padding: 0.9rem 0.8rem;
+
     &::placeholder {
+      font-size: 0.8rem;
       color: white;
       -webkit-text-fill-color: white;
     }

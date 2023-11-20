@@ -1,4 +1,5 @@
 enum Breakpoint {
+  Sx = 375,
   Xs = 576,
   Sm = 768,
   Md = 992,

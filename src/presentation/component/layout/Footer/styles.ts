@@ -1,5 +1,6 @@
 import styled from "@emotion/styled"
 import { ReactComponent as BaseBatsIcon } from "presentation/asset/svg/bats.svg"
+import { mq } from "presentation/mediaquery"
 
 export const BatsIcon = styled(BaseBatsIcon)`
   width: 80px;
@@ -12,4 +13,8 @@ export const Wrapper = styled.footer`
   align-items: center;
   padding: 30px 0;
   margin-top: auto;
+
+  ${mq.lowerSm} {
+    padding: 20px 0;
+  }
 `

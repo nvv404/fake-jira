@@ -12,7 +12,7 @@ export type PropsT = {
 
 const Text = styled.span<PropsT>`
   color: ${({ theme, color }) => (color ? theme.colors[color] : "inherit")};
-  font-size: ${({ size }) => (size ? `${size}px` : "inherit")};
+  font-size: ${({ size }) => (size ? `${size}rem` : "inherit")};
   font-weight: ${({ theme, weight }) =>
     weight ? theme.font.weight[weight] : "inherit"};
 `

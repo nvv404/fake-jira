@@ -1,5 +1,6 @@
 import styled from "@emotion/styled"
 import BaseProgress from "presentation/component/common/block/Loader"
+import { mq } from "presentation/mediaquery"
 
 export const Wrapper = styled.div`
   position: relative;
@@ -9,6 +10,10 @@ export const Wrapper = styled.div`
   column-gap: 10px;
   margin-top: 20px;
   overflow-x: auto;
+
+  ${mq.lowerSm} {
+    min-height: 40vh;
+  }
 `
 
 export const Progress = styled(BaseProgress)`
