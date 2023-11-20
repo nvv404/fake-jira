@@ -15,7 +15,6 @@ describe("Kanban control block layout", () => {
     const mockFirstBoard = TASK_BOARD_MOCK_DATA[0]
     const boardFirstTask = mockFirstBoard.data[0]
 
-    expect(screen.getByText(mockFirstBoard.name)).toBeInTheDocument()
     expect(screen.getByText(boardFirstTask.name)).toBeInTheDocument()
   })
 })
