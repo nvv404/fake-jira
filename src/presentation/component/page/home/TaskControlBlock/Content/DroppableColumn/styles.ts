@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   border-radius: 3px;
   background-color: ${({ theme }) => theme.colors.primaryDark};
   padding: 10px 7px;
+  min-height: 40vh;
 `
 
 export const Inner = styled.ul`

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled"
 import VARIANT_TO_CSS_MAP from "./variantToCssMap"
 
-export type VariantT = "primary" | "naked"
+export type VariantT = "primary" | "naked" | "outlined"
 
 export type PropsT = {
   variant: VariantT
@@ -10,6 +10,7 @@ export type PropsT = {
 export const BaseButton = styled.button<PropsT>`
   display: flex;
   align-items: center;
+  justify-content: center;
   outline: none;
   color: ${({ theme }) => theme.colors.textMain};
   font-size: 15px;
@@ -28,6 +29,7 @@ export const BaseButton = styled.button<PropsT>`
     cursor: default;
     border-color: ${({ theme }) => theme.colors.disabledDark};
     color: ${({ theme }) => theme.colors.textDark};
+    opacity: 0.8;
   }
 
   &:focus-visible {
