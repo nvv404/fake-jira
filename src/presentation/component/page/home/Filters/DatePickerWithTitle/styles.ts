@@ -6,12 +6,12 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  &:first-child {
+  &:first-of-type {
     margin-right: 10px;
   }
 
   ${mq.lowerSm} {
-    &:first-child {
+    &:first-of-type {
       margin-right: 0;
       margin-bottom: 10px;
     }
