@@ -5,9 +5,10 @@ export const Wrapper = styled.div`
   position: relative;
   flex: 1 1 auto;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(250px, 1fr));
   column-gap: 10px;
   margin-top: 20px;
+  overflow-x: scroll;
 `
 
 export const Progress = styled(BaseProgress)`

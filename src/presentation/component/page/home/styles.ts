@@ -5,6 +5,7 @@ export const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
+  overflow: hidden;
 `
 
 export const Title = styled(BaseText)`

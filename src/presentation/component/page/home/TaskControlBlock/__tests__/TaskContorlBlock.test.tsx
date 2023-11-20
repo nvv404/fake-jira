@@ -8,7 +8,7 @@ describe("Kanban control block layout", () => {
   it("render kanban with mock items", async () => {
     renderWithProviders(<TaskControlBlock />, {
       preloadedState: {
-        tasksBoard: { data: TASK_BOARD_MOCK_DATA },
+        tasksBoard: { data: TASK_BOARD_MOCK_DATA, isLoading: false },
       },
     })
 
