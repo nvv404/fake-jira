@@ -6,14 +6,14 @@ export const Wrapper = styled.div`
   flex-direction: column;
   border-radius: 3px;
   background-color: ${({ theme }) => theme.colors.primaryDark};
-  padding: 10px;
+  padding: 10px 7px;
 `
 
 export const Inner = styled.ul`
   display: flex;
   flex-direction: column;
   margin-top: 20px;
-  row-gap: 10px;
+  row-gap: 7px;
   /*
     touch actions are needed to support dnd on mobile
   */

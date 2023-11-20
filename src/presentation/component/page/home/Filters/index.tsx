@@ -1,9 +1,10 @@
 import { FC, MouseEventHandler, useState } from "react"
+import { fetchTaskBoards } from "data/store/tasksBoardReducer/api/actions"
 import { ValueT as DatePickerValueT } from "presentation/component/common/control/DatePicker"
 import useAppSelector from "presentation/hook/useAppSelector"
-import { Wrapper, Button, DatePicker } from "./styles"
 import useAppDispatch from "presentation/hook/useAppDispatch"
-import { fetchTaskBoards } from "data/store/tasksBoardReducer/api/actions"
+import DatePickerWithTitle from "./DatePickerWithTitle"
+import { Wrapper, Button } from "./styles"
 
 type StateT = {
   startDate: DatePickerValueT
@@ -37,18 +38,20 @@ const Filters: FC = () => {
 
   return (
     <Wrapper>
-      <DatePicker
+      <DatePickerWithTitle
         disabled={isLoading}
         value={dateState.startDate}
         onChange={handleStartDatePickerChange}
+        title="From"
       />
-      <DatePicker
+      <DatePickerWithTitle
         disabled={isLoading}
         value={dateState.endDate}
         onChange={handleEndDatePickerChange}
+        title="To"
       />
       <Button disabled={isLoading} onClick={handleButtonClick}>
-        Найти
+        Search
       </Button>
     </Wrapper>
   )

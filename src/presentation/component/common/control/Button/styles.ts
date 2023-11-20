@@ -12,11 +12,13 @@ export const BaseButton = styled.button<PropsT>`
   align-items: center;
   outline: none;
   color: ${({ theme }) => theme.colors.textMain};
-  font-size: 13px;
+  font-size: 15px;
+  font-weight: ${({ theme }) => theme.font.weight.semiBold};
   padding: 10px 15px;
   border-radius: 4px;
-  transition: background ${({ theme }) => theme.transition.fast};
-  border: none;
+  transition: background ${({ theme }) => theme.transition.fast},
+    border-color ${({ theme }) => theme.transition.fast};
+  border: 1px solid ${({ theme }) => theme.colors.primaryDark};
   cursor: pointer;
 
   ${({ theme, variant }) => VARIANT_TO_CSS_MAP[variant](theme)};

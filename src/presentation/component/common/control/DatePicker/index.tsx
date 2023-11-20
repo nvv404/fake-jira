@@ -4,7 +4,7 @@ import { useTheme } from "@emotion/react"
 
 export type ValueT = string | null
 
-type PropsT = {
+export type PropsT = {
   value: ValueT
   onChange: (value: ValueT) => void
   disabled?: boolean

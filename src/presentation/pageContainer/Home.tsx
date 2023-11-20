@@ -7,7 +7,7 @@ const Home: FC = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(fetchTaskBoards({}))
+    dispatch(fetchTaskBoards({ endDate: null, startDate: null }))
   }, [dispatch])
 
   return <HomePage />

@@ -7,15 +7,6 @@ export const Wrapper = styled.div`
   min-height: 100vh;
 `
 
-export const Footer = styled.footer`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 30px 0;
-  border-top: 2px solid ${({ theme }) => theme.colors.primaryDark};
-  margin-top: auto;
-`
-
 export const Content = styled.div`
   display: flex;
   margin: 20px 0;

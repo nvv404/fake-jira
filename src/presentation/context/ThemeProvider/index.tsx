@@ -4,7 +4,7 @@ import {
   createTheme,
   ThemeProvider as MUIThemeProvider,
 } from "@mui/material/styles"
-import { ruRU } from "@mui/x-date-pickers/locales"
+import { enUS } from "@mui/x-date-pickers/locales"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import { LocalizationProvider } from "@mui/x-date-pickers"
 import theme from "./theme"
@@ -36,7 +36,7 @@ const baseMUITheme = createTheme(
       },
     },
   },
-  ruRU,
+  enUS,
 )
 
 const ThemeProvider: FC<PropsWithChildren> = (props) => {
