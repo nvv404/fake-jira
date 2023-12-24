@@ -1,12 +1,12 @@
 import { FC } from "react"
 import { DndContext, DragOverlay } from "@dnd-kit/core"
 import withTaskBoardDNDLogic, {
-  WithTaskBoardDNDLogicPropsT,
-} from "presentation/component/page/home/TaskControlBlock/withTaskBoardDNDLogic"
+  WithTaskBoardDNDLogicResultT,
+} from "presentation/component/page/home/TaskControlBlock/withBoardDNDLogic"
 import Content from "./Content"
 import Item from "./common/Item"
 
-type PropsT = WithTaskBoardDNDLogicPropsT
+type PropsT = WithTaskBoardDNDLogicResultT
 
 const TaskControlBlock: FC<PropsT> = (props) => {
   const { activeTask, items, ...restProps } = props
