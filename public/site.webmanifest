@@ -1,0 +1,10 @@
+{
+  "name": "Halloween Jira",
+  "short_name": "HJ",
+  "theme_color": "#872341",
+  "background_color": "#22092c",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/"
+}
